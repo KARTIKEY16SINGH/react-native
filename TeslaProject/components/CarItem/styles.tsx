@@ -2,8 +2,8 @@ import { StyleSheet } from 'react-native';
 
 const styles = StyleSheet.create({
     container: {
-        flex: 1,
-        alignItems: 'center'
+        width:'100%',
+        height:'100%'
       },
       titleContainer: {
         marginTop: '30%',
@@ -23,7 +23,12 @@ const styles = StyleSheet.create({
         height: '100%',
         resizeMode: 'stretch',
         position: 'absolute'
-      }
+      },
+      buttonContainer:{
+        position: 'absolute',
+        bottom: 50,
+        width: '100%'
+      },
 });
 
 export default styles;
