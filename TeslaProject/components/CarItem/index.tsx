@@ -10,12 +10,18 @@ class CarItem extends React.Component {
     }
 
     render() {
+        const {name, tagline, taglineCTA, image} = this.props
         return (
             <View style={styles.container}>
-                <ImageBackground source={require('../../assets/images/ModelS.jpeg')} style={styles.bgImage}/>
+                <ImageBackground source={image} style={styles.bgImage}/>
                 <View style={styles.titleContainer}>
-                    <Text style={styles.title}>Model S</Text>
-                    <Text style={styles.subtitle}>Starting at $69,420</Text>
+                    <Text style={styles.title}>{name}</Text>
+                    <Text style={styles.subtitle}>
+                        {tagline}&nbsp;
+                        <Text style={styles.subtitleCTA}>
+                            {taglineCTA}
+                        </Text>
+                    </Text>
                 </View>
                 <View style={styles.buttonContainer}>
                     <StyledButton 

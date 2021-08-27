@@ -14,7 +14,12 @@ import CarItem from './components/CarItem';
 const App = () => {
   return (
     <View style={styles.container} >
-      <CarItem />
+      <CarItem 
+      name='Model X' 
+      tagline='Order Online For' 
+      taglineCTA='Touchless Delivery'
+      image={require('./assets/images/ModelX.jpeg')} 
+      />
     </View>
   );
 };
