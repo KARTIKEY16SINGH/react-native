@@ -10,7 +10,7 @@ class CarItem extends React.Component {
     }
 
     render() {
-        const {name, tagline, taglineCTA, image} = this.props
+        const {name, tagline, taglineCTA, image} = this.props.car
         return (
             <View style={styles.container}>
                 <ImageBackground source={image} style={styles.bgImage}/>

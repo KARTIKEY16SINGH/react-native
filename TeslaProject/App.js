@@ -9,17 +9,12 @@
 import React from 'react';
 import { View, Text, StyleSheet, ImageBackground } from 'react-native';
 
-import CarItem from './components/CarItem';
+import CarsList from './components/CarsList';
 
 const App = () => {
   return (
     <View style={styles.container} >
-      <CarItem 
-      name='Model X' 
-      tagline='Order Online For' 
-      taglineCTA='Touchless Delivery'
-      image={require('./assets/images/ModelX.jpeg')} 
-      />
+      <CarsList />
     </View>
   );
 };
