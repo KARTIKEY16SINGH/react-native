@@ -6,10 +6,10 @@ class MoviewCardView extends React.Component {
   render() {
     return (
       <View style={styles.container}>
-        <Image style={styles.poster} />
+        <Image style={styles.poster} source={{ uri: 'https://image.tmdb.org/t/p/original/ic0intvXZSfBlYPIvWXpU1ivUCO.jpg' }} />
         <View style={styles.ratingContainer}>
-          <Image />
-          <Text />
+          <Image source={require('../../assests/star.png')} style={styles.starIcon} />
+          <Text style={styles.ratingText} >7.0</Text>
         </View>
       </View>
     );
