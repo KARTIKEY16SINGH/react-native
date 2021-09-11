@@ -6,12 +6,15 @@
  * @flow strict-local
  */
 
-import React from 'react';
+import React, {useEffect} from 'react';
 import {View, StyleSheet, StatusBar} from 'react-native';
 import Homepage from './Components/HomePage/Homepage';
 import FetchManager from './Managers/FetchManager';
 
 const App = () => {
+  useEffect(() => {
+    FetchManager.shared.fetchImageConfigUrl();
+  }, []);
   FetchManager.shared.fetchPopularMovie();
   return (
     <View style={styles.backgroundStyle}>
