@@ -4,7 +4,15 @@ import store from '../myredux/store/store';
 class DataManager {
   static readonly shared = new DataManager();
   private imageConfigUrl;
-  private constructor() {}
+  private constructor() {
+    store.subscribe(() => {
+      // console.log(this.TAG, 'states ==> ', store.getState());
+      const {popularMovies} = store.getState();
+      if (popularMovies.loading == false && popularMovies.error === '') {
+        this._popularMoviesList = popularMovies.data;
+      }
+    });
+  }
   private TAG = 'DataManager';
   private _popularMoviesList: MovieListModel;
 
@@ -25,6 +33,10 @@ class DataManager {
 
   getFetchImageUrlData() {
     return store.getState().imageUrl;
+  }
+
+  getPopularMoviesData() {
+    return store.getState().popularMovies;
   }
 }
 

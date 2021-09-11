@@ -3,6 +3,7 @@ import {
   fetchImageUrlRequest,
   fetchImageUrlSuccess,
 } from '../myredux/actions/FetchImageUrlAction';
+import FetchPopularMoviesActions from '../myredux/actions/FetchPopularMoviesAction';
 import store from '../myredux/store/store';
 import DataManager from './DataManager';
 import HTTPManager from './HTTPManager';
@@ -14,17 +15,18 @@ class FetchManager {
   private constructor() {}
 
   fetchPopularMovie() {
-    HTTPManager.getData(UrlManager.shared.PopularMovieURL, null, json => {
-      // console.log('FetchManager fetchPopularMovie() data ==> ', json);
-      DataManager.shared.popularMoviesList = json;
-    });
+    // store.dispatch(FetchPopularMoviesActions.fetchRequest());
+    HTTPManager.getData(
+      UrlManager.shared.PopularMovieURL,
+      json => store.dispatch(FetchPopularMoviesActions.fetchSuccess(json)),
+      error => store.dispatch(FetchPopularMoviesActions.fetchFailure(error)),
+    );
   }
 
   fetchImageConfigUrl() {
     store.dispatch(fetchImageUrlRequest());
     HTTPManager.getData(
       UrlManager.shared.imageConfigurationURL,
-      null,
       json => {
         store.dispatch(fetchImageUrlSuccess(json));
       },
@@ -32,6 +34,10 @@ class FetchManager {
         store.dispatch(fetchImageUrlFailure(error));
       },
     );
+  }
+
+  fetchInitialData() {
+    this.fetchPopularMovie();
   }
 }
 

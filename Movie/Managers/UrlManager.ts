@@ -33,7 +33,9 @@ class UrlManager {
     return 'https://api.themoviedb.org/3/configuration?api_key=' + this.apiKey;
   }
 
-  getImageUrl() {}
+  getImageUrl(path) {
+    return this.baseImageUrl + path;
+  }
 }
 
 export default UrlManager;

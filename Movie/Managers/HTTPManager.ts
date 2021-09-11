@@ -1,5 +1,5 @@
 class HTTPManager {
-  static getData(url, otherParam = null, completionHandler, errorHandler?) {
+  static getData(url, completionHandler, errorHandler?) {
     fetch(url)
       .then(response => response.json())
       .then(json => completionHandler(json))

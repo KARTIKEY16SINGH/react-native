@@ -1,16 +1,18 @@
 import React from 'react';
-import { View } from 'react-native';
+import {View} from 'react-native';
 import MoviewCardView from '../MovieCard/MovieCardView';
+import Shimmer from '../MovieCard/Shimmer';
 import styles from './styles';
 
 class Homepage extends React.Component {
-    render() {
-        return(
-            <View style={styles.container}>
-                <MoviewCardView />
-            </View>
-        )
-    }
+  render() {
+    return (
+      <View style={styles.container}>
+        {/* <MoviewCardView /> */}
+        <Shimmer />
+      </View>
+    );
+  }
 }
 
 export default Homepage;

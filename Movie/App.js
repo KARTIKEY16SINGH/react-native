@@ -14,8 +14,8 @@ import FetchManager from './Managers/FetchManager';
 const App = () => {
   useEffect(() => {
     FetchManager.shared.fetchImageConfigUrl();
+    FetchManager.shared.fetchInitialData();
   }, []);
-  FetchManager.shared.fetchPopularMovie();
   return (
     <View style={styles.backgroundStyle}>
       <Homepage />
