@@ -15,7 +15,7 @@ class FetchManager {
   private constructor() {}
 
   fetchPopularMovie() {
-    // store.dispatch(FetchPopularMoviesActions.fetchRequest());
+    store.dispatch(FetchPopularMoviesActions.fetchRequest());
     HTTPManager.getData(
       UrlManager.shared.PopularMovieURL,
       json => store.dispatch(FetchPopularMoviesActions.fetchSuccess(json)),

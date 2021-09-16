@@ -6,7 +6,7 @@ class DataManager {
   private imageConfigUrl;
   private constructor() {
     store.subscribe(() => {
-      // console.log(this.TAG, 'states ==> ', store.getState());
+      console.log(this.TAG, 'states ==> ', store.getState());
       const {popularMovies} = store.getState();
       if (popularMovies.loading == false && popularMovies.error === '') {
         this._popularMoviesList = popularMovies.data;

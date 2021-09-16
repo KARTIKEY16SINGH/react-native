@@ -13,12 +13,12 @@ class UrlManager {
           this.baseImageUrl = imgConfigData.imageURL;
         }
       }
-      console.log(
-        this.TAG,
-        'subscribe',
-        'imageConfigUrl == ',
-        this.baseImageUrl,
-      );
+      // console.log(
+      //   this.TAG,
+      //   'subscribe',
+      //   'imageConfigUrl == ',
+      //   this.baseImageUrl,
+      // );
     });
   }
 
@@ -33,8 +33,14 @@ class UrlManager {
     return 'https://api.themoviedb.org/3/configuration?api_key=' + this.apiKey;
   }
 
-  getImageUrl(path) {
-    return this.baseImageUrl + path;
+  getImageUrl(path): string {
+    console.log(
+      this.TAG,
+      'getImageUrl(path) path ==>',
+      this.baseImageUrl + 'original' + path,
+    );
+
+    return this.baseImageUrl + 'original' + path;
   }
 }
 

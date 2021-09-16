@@ -1,8 +1,20 @@
 import actionsTypes from '../constants/actionTypes';
+import {MovieListModel} from '../../Models/MovieDataModel';
 
-const initialState = {
+export type FetchMoviesListModel = {
+  loading: boolean;
+  data: MovieListModel;
+  error: string;
+};
+
+const initialState: FetchMoviesListModel = {
   loading: false,
-  data: undefined,
+  data: {
+    page: 0,
+    results: [],
+    total_results: 0,
+    total_pages: 0,
+  },
   error: '',
 };
 
@@ -22,7 +34,12 @@ const popularMoviesReducer = (state = initialState, action) => {
     case actionsTypes.FETCH_POPULAR_MOVIES_FAILURE:
       return {
         loading: false,
-        data: {},
+        data: {
+          page: 0,
+          results: [],
+          total_results: 0,
+          total_pages: 0,
+        },
         error: action.payload,
       };
     default:

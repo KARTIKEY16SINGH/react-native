@@ -8,6 +8,6 @@ const rootReducer = combineReducers({
   popularMovies: popularMoviesReducer,
 });
 
-const store = createStore(rootReducer);
+let store = createStore(rootReducer);
 
 export default store;
