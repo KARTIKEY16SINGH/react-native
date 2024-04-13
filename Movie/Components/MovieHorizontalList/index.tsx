@@ -43,6 +43,7 @@ export class MovieHorizontalList extends Component {
         renderItem={({item}) => (
           <MoviewCardView loading={this.state.loading} data={item} />
         )}
+        horizontal
       />
     );
   }
