@@ -14,16 +14,18 @@ const NativeStackNavigator = createNativeStackNavigator();
 
 const InsideStackNavigator = createNativeStackNavigator();
 
-function insideLayout() {
+function InsideLayout() {
 	return (
-		<InsideStackNavigator.Navigator>
-			<InsideStackNavigator.Screen
-				name={NavigationConstant.detailPage.name}
-				component={DetailPage}
-			/>
+		<InsideStackNavigator.Navigator initialRouteName={NavigationConstant.landingPage.name}>
 			<InsideStackNavigator.Screen
 				name={NavigationConstant.landingPage.name}
 				component={LandingPage}
+				options={{ headerShown: false }}
+			/>
+			<InsideStackNavigator.Screen
+				name={NavigationConstant.detailPage.name}
+				component={DetailPage}
+				options={{ headerShown: false }}
 			/>
 		</InsideStackNavigator.Navigator>
 	);
@@ -47,7 +49,7 @@ export default function App() {
 				{currentUser ? (
 					<NativeStackNavigator.Screen
 						name="Inside"
-						component={insideLayout}
+						component={InsideLayout}
 						options={{ headerShown: false }}
 					/>
 				) : (

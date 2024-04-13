@@ -11,7 +11,7 @@ interface RouterProps {
 const LandingPage = (routerProps: RouterProps) => {
     return (
         <View style={{flex: 1, justifyContent: 'center', alignItems: 'center'}}>
-            <Button onPress={() => routerProps.navigation.navigate(NavigationConstant.detailPage.id)} title="Open Details" />
+            <Button onPress={() => routerProps.navigation.navigate(NavigationConstant.detailPage.name)} title="Open Details" />
             <Button onPress={() => FirebaseAuth.signOut()} title="Logout" />
         </View>
     );
