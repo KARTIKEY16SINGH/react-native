@@ -31,6 +31,8 @@ function InsideLayout() {
 	);
 }
 
+export let CurrentUser: User = undefined
+
 export default function App() {
 	const [currentUser, setCurrentUser] = useState(null);
 
@@ -38,6 +40,7 @@ export default function App() {
 		onAuthStateChanged(FirebaseAuth, (user) => {
 			console.log("user", user);
 			setCurrentUser(user);
+      CurrentUser = user
 		});
 	}, []);
 
