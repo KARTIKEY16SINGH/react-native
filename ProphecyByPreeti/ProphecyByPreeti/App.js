@@ -9,6 +9,7 @@ import DetailPage from "./ProphecyByPreeti/Screens/DetailPage/detailPage";
 import LandingPage from "./ProphecyByPreeti/Screens/LandingPage/landingPage";
 import React, { useState, useEffect } from "react";
 import { User } from "firebase/auth";
+import { ScheduleCallbackPage } from "./ProphecyByPreeti/Screens/ScheduleCallbackPage/scheduleCallbackPage";
 
 const NativeStackNavigator = createNativeStackNavigator();
 
@@ -16,7 +17,9 @@ const InsideStackNavigator = createNativeStackNavigator();
 
 function InsideLayout() {
 	return (
-		<InsideStackNavigator.Navigator initialRouteName={NavigationConstant.landingPage.name}>
+		<InsideStackNavigator.Navigator
+			initialRouteName={NavigationConstant.landingPage.name}
+		>
 			<InsideStackNavigator.Screen
 				name={NavigationConstant.landingPage.name}
 				component={LandingPage}
@@ -27,11 +30,16 @@ function InsideLayout() {
 				component={DetailPage}
 				options={{ headerShown: false }}
 			/>
+			<InsideStackNavigator.Screen
+				name={NavigationConstant.scheduleCallbackPage.name}
+				component={ScheduleCallbackPage}
+				options={{ headerShown: false }}
+			/>
 		</InsideStackNavigator.Navigator>
 	);
 }
 
-export let CurrentUser: User = undefined
+export let CurrentUser: User = undefined;
 
 export default function App() {
 	const [currentUser, setCurrentUser] = useState(null);
@@ -40,7 +48,7 @@ export default function App() {
 		onAuthStateChanged(FirebaseAuth, (user) => {
 			console.log("user", user);
 			setCurrentUser(user);
-      CurrentUser = user
+			CurrentUser = user;
 		});
 	}, []);
 

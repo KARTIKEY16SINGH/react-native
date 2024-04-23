@@ -42,8 +42,13 @@ const LandingPage = (routerProps: RouterProps) => {
 						NavigationConstant.detailPage.name
 					)
 				}
-				title="Open Details"
+				title="Update Details"
 			/>
+
+			<Button title="Schedule a call" onPress={() => routerProps.navigation.navigate(NavigationConstant.scheduleCallbackPage.name)}/>
+			<Button title="Request callback" />
+			<Button title="Chat With Us" />
+
 			<Button onPress={() => FirebaseAuth.signOut()} title="Logout" />
 		</View>
 	);
