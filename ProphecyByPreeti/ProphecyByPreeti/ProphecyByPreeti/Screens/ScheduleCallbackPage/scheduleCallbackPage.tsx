@@ -3,6 +3,7 @@ import { CalendarList, DateData } from "react-native-calendars";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { ScheduleCallbackPageStyle } from "./scheduleCallbackPageStyles";
 import { ActivityIndicator, View } from "react-native";
+import { MakePayementView } from "../../Views/MakePayment/MakePayment";
 
 export const ScheduleCallbackPage = () => {
 	const [fetchingSlots, setFetchingSlots] = useState(true);
@@ -27,9 +28,12 @@ export const ScheduleCallbackPage = () => {
 	};
 
 	const getAvailableSlots = (timestamp: number) => {
-        console.log("ScheduleCallbackPage getAvailable slots for timestamp =",timestamp)
-        setFetchingSlots(!fetchingSlots)
-    };
+		console.log(
+			"ScheduleCallbackPage getAvailable slots for timestamp =",
+			timestamp
+		);
+		setFetchingSlots(!fetchingSlots);
+	};
 
 	useEffect(() => {
 		getAvailableSlots(todayTimeStamp());
@@ -46,15 +50,16 @@ export const ScheduleCallbackPage = () => {
 				scrollEnabled={true}
 				style={ScheduleCallbackPageStyle.calendar}
 				onDayPress={(date) => {
-                    console.log("Date Pressed date =", date)
-                    getAvailableSlots(date.timestamp)
-                }}
+					console.log("Date Pressed date =", date);
+					getAvailableSlots(date.timestamp);
+				}}
 			/>
 			{fetchingSlots ? (
 				<ActivityIndicator size={"large"} />
 			) : (
 				<View></View>
 			)}
+			<MakePayementView />
 		</SafeAreaView>
 	);
 };

@@ -10,6 +10,7 @@ import LandingPage from "./ProphecyByPreeti/Screens/LandingPage/landingPage";
 import React, { useState, useEffect } from "react";
 import { User } from "firebase/auth";
 import { ScheduleCallbackPage } from "./ProphecyByPreeti/Screens/ScheduleCallbackPage/scheduleCallbackPage";
+// import { registerRootComponent } from 'expo';
 
 const NativeStackNavigator = createNativeStackNavigator();
 
