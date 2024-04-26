@@ -10,11 +10,16 @@ import LandingPage from "./ProphecyByPreeti/Screens/LandingPage/landingPage";
 import React, { useState, useEffect } from "react";
 import { User } from "firebase/auth";
 import { ScheduleCallbackPage } from "./ProphecyByPreeti/Screens/ScheduleCallbackPage/scheduleCallbackPage";
+import { StreamChat } from "stream-chat";
+import { StreamDataManager } from "./ProphecyByPreeti/Global/Stream/StreamManager";
+import { ChatView } from "./ProphecyByPreeti/Views/ChatView/ChatView";
 // import { registerRootComponent } from 'expo';
 
 const NativeStackNavigator = createNativeStackNavigator();
 
 const InsideStackNavigator = createNativeStackNavigator();
+
+const streamClient = StreamChat.getInstance(StreamDataManager.apiKey);
 
 function InsideLayout() {
 	return (
@@ -36,6 +41,11 @@ function InsideLayout() {
 				component={ScheduleCallbackPage}
 				options={{ headerShown: false }}
 			/>
+			<InsideStackNavigator.Screen
+				name={NavigationConstant.chatWithUsPage.name}
+				component={ChatView}
+				options={{ headerShown: false }}
+			/>
 		</InsideStackNavigator.Navigator>
 	);
 }
@@ -51,6 +61,23 @@ export default function App() {
 			setCurrentUser(user);
 			CurrentUser = user;
 		});
+	}, []);
+
+	useEffect(() => {
+		const connectUser = async () => {
+			await streamClient.connectUser(
+				{
+					id: "kartikey",
+					name: "Kartikey Singh",
+				},
+				streamClient.devToken("kartikey")
+			);
+			// const channel = streamClient.channel("messaging", "preeti", {name: "Preeti"});
+			// await channel.create()
+		};
+		connectUser();
+
+		return () => streamClient.disconnectUser();
 	}, []);
 
 	return (

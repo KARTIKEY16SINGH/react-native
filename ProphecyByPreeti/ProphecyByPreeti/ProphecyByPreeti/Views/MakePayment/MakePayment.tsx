@@ -9,7 +9,19 @@ export const MakePayementView = () => {
 			<Button
 				title="Make Payment"
 				onPress={() => {
-					RazorPayManager.initiatePayment(null, null, null);
+					RazorPayManager.initiatePayment(
+						{
+							order_id: "order_O28jlyNEtiwUHq",
+							amount: "310000",
+							prefill: {
+								email: "gaurav.kumar@example.com",
+								contact: "9191919191",
+								name: "Gaurav Kumar",
+							},
+						},
+						null,
+						null
+					);
 				}}
 			/>
 		</SafeAreaView>

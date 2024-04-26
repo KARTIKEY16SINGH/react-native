@@ -18,7 +18,7 @@ const LandingPage = (routerProps: RouterProps) => {
 		if (CurrentUser) {
 			const uid = CurrentUser.uid;
 			UserInfoRepository.shared.getUserInfo(uid, (response) => {
-                console.log("Landing Page Completion Handler")
+				console.log("Landing Page Completion Handler");
 				if (response) {
 					setShowDetail(false);
 				} else {
@@ -28,9 +28,9 @@ const LandingPage = (routerProps: RouterProps) => {
 		}
 	}, [CurrentUser]);
 
-    if (showDetail == true) {
-        routerProps.navigation.navigate(NavigationConstant.detailPage.name)
-    }
+	if (showDetail == true) {
+		routerProps.navigation.navigate(NavigationConstant.detailPage.name);
+	}
 
 	return (
 		<View
@@ -45,9 +45,23 @@ const LandingPage = (routerProps: RouterProps) => {
 				title="Update Details"
 			/>
 
-			<Button title="Schedule a call" onPress={() => routerProps.navigation.navigate(NavigationConstant.scheduleCallbackPage.name)}/>
-			<Button title="Request callback" />
-			<Button title="Chat With Us" />
+			<Button
+				title="Schedule a call"
+				onPress={() =>
+					routerProps.navigation.navigate(
+						NavigationConstant.scheduleCallbackPage.name
+					)
+				}
+			/>
+			<Button title="Request callback" onPress={() => {}} />
+			<Button
+				title="Chat With Us"
+				onPress={() =>
+					routerProps.navigation.navigate(
+						NavigationConstant.chatWithUsPage.name
+					)
+				}
+			/>
 
 			<Button onPress={() => FirebaseAuth.signOut()} title="Logout" />
 		</View>

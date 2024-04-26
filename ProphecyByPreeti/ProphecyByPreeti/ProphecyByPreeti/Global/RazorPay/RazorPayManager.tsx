@@ -28,7 +28,7 @@ export const OrderIdForConsultation = "order_O28jlyNEtiwUHq";
 export const RazorPayManager = {
 	initiatePayment: (options, successCallback, failureCallback) => {
 		options = {
-			options,
+			...options,
 			key: keyId,
 			currency: "INR",
 			name: firmName,
