@@ -16,6 +16,7 @@ import {
 } from "react-native";
 import React, { useEffect, useState } from "react";
 import { Text } from "react-native";
+import { CurrentUser } from "../../../App";
 
 const streamClient = StreamChat.getInstance(StreamDataManager.apiKey);
 
@@ -28,7 +29,7 @@ export const ChatView = () => {
 		// debugger
 		console.log("Chat View useEffect Channel =", channel);
 		const connectUser = async () => {
-			const channel = streamClient.channel("messaging", "preeti", {name: "Preeti"});
+			const channel = streamClient.channel("messaging", CurrentUser.uid, {name: "Preeti"});
 			await channel.watch()
 			console.log("Chat View useEffect Channel =", channel);
 			// debugger;

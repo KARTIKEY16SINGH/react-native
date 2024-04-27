@@ -11,15 +11,22 @@ import React, { useState, useEffect } from "react";
 import { User } from "firebase/auth";
 import { ScheduleCallbackPage } from "./ProphecyByPreeti/Screens/ScheduleCallbackPage/scheduleCallbackPage";
 import { StreamChat } from "stream-chat";
-import { StreamDataManager } from "./ProphecyByPreeti/Global/Stream/StreamManager";
+import {
+	StreamDataManager,
+	StreamManager,
+} from "./ProphecyByPreeti/Global/Stream/StreamManager";
 import { ChatView } from "./ProphecyByPreeti/Views/ChatView/ChatView";
+import {
+	UserInfoModel,
+	UserInfoRepository,
+} from "./ProphecyByPreeti/Global/UserInfoRepository";
 // import { registerRootComponent } from 'expo';
 
 const NativeStackNavigator = createNativeStackNavigator();
 
 const InsideStackNavigator = createNativeStackNavigator();
 
-const streamClient = StreamChat.getInstance(StreamDataManager.apiKey);
+const streamClient = StreamManager.shared.streamClient;
 
 function InsideLayout() {
 	return (
@@ -44,7 +51,7 @@ function InsideLayout() {
 			<InsideStackNavigator.Screen
 				name={NavigationConstant.chatWithUsPage.name}
 				component={ChatView}
-				options={{ headerShown: false }}
+				options={{ headerShown: true }}
 			/>
 		</InsideStackNavigator.Navigator>
 	);
@@ -54,29 +61,44 @@ export let CurrentUser: User = undefined;
 
 export default function App() {
 	const [currentUser, setCurrentUser] = useState(null);
-
+	const [streamReady, setStreamReady] = useState(false);
 	useEffect(() => {
 		onAuthStateChanged(FirebaseAuth, (user) => {
-			console.log("user", user);
-			setCurrentUser(user);
+			console.log("App useEffect user", user);
 			CurrentUser = user;
+			UserInfoRepository.shared.getUserInfo(user.uid, (response) => {
+				console.log("App userInfoRepository getUserInfo callback function")
+				StreamManager.shared.connectUserToStream(response, user);
+				setStreamReady(true)
+			});
+			setCurrentUser(user);
 		});
 	}, []);
 
-	useEffect(() => {
+	const connectUserToStream = (response: UserInfoModel) => {
+		if (currentUser == null || currentUser == undefined) {
+			return;
+		}
+		console.log("CurrentUser email = ", currentUser.email);
+		console.log("CurrentUser uid = ", currentUser.uid);
+		console.log("CurrentUser name =", response.name);
 		const connectUser = async () => {
+			// debugger
 			await streamClient.connectUser(
 				{
-					id: "kartikey",
-					name: "Kartikey Singh",
+					id: currentUser.uid,
+					name: response.name,
 				},
-				streamClient.devToken("kartikey")
+				// currentUser.uid
+				streamClient.devToken(currentUser.uid)
 			);
 			// const channel = streamClient.channel("messaging", "preeti", {name: "Preeti"});
 			// await channel.create()
 		};
 		connectUser();
+	};
 
+	useEffect(() => {
 		return () => streamClient.disconnectUser();
 	}, []);
 
@@ -85,7 +107,7 @@ export default function App() {
 			<NativeStackNavigator.Navigator
 				initialRouteName={NavigationConstant.loginPage.name}
 			>
-				{currentUser ? (
+				{(currentUser && streamReady) ? (
 					<NativeStackNavigator.Screen
 						name="Inside"
 						component={InsideLayout}

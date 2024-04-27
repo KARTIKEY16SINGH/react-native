@@ -16,15 +16,19 @@ const LandingPage = (routerProps: RouterProps) => {
 	useEffect(() => {
 		console.log("Inside Use Effect");
 		if (CurrentUser) {
-			const uid = CurrentUser.uid;
-			UserInfoRepository.shared.getUserInfo(uid, (response) => {
-				console.log("Landing Page Completion Handler");
-				if (response) {
-					setShowDetail(false);
-				} else {
-					setShowDetail(true);
-				}
-			});
+			const userInfo = UserInfoRepository.shared.currentUserInfo;
+			console.log("Landing Page UserInfo =", userInfo);
+			if (userInfo == null || userInfo == undefined) {
+				const uid = CurrentUser.uid;
+				UserInfoRepository.shared.getUserInfo(uid, (response) => {
+					console.log("Landing Page Completion Handler response =",response);
+					if (response) {
+						setShowDetail(false);
+					} else {
+						setShowDetail(true);
+					}
+				});
+			}
 		}
 	}, [CurrentUser]);
 
