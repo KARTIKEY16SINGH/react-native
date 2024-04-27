@@ -20,6 +20,7 @@ import {
 	UserInfoModel,
 	UserInfoRepository,
 } from "./ProphecyByPreeti/Global/UserInfoRepository";
+import { UsersPage } from "./ProphecyByPreeti/Screens/UsersPage/UsersPage";
 // import { registerRootComponent } from 'expo';
 
 const NativeStackNavigator = createNativeStackNavigator();
@@ -53,6 +54,8 @@ function InsideLayout() {
 				component={ChatView}
 				options={{ headerShown: true }}
 			/>
+			<InsideStackNavigator.Screen name={NavigationConstant.usersPage.name}
+			component={UsersPage} />
 		</InsideStackNavigator.Navigator>
 	);
 }

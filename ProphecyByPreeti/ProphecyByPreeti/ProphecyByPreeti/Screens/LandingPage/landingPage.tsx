@@ -21,7 +21,10 @@ const LandingPage = (routerProps: RouterProps) => {
 			if (userInfo == null || userInfo == undefined) {
 				const uid = CurrentUser.uid;
 				UserInfoRepository.shared.getUserInfo(uid, (response) => {
-					console.log("Landing Page Completion Handler response =",response);
+					console.log(
+						"Landing Page Completion Handler response =",
+						response
+					);
 					if (response) {
 						setShowDetail(false);
 					} else {
@@ -65,6 +68,15 @@ const LandingPage = (routerProps: RouterProps) => {
 						NavigationConstant.chatWithUsPage.name
 					)
 				}
+			/>
+
+			<Button
+				onPress={() =>
+					routerProps.navigation.navigate(
+						NavigationConstant.usersPage.name
+					)
+				}
+				title="Users Page"
 			/>
 
 			<Button onPress={() => FirebaseAuth.signOut()} title="Logout" />

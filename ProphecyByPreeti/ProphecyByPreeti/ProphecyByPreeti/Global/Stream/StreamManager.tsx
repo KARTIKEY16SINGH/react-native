@@ -8,7 +8,7 @@ export const StreamDataManager = {
 
 export class StreamManager {
 	static shared = new StreamManager();
-	streamClient;
+	streamClient: StreamChat;
 	currentUser: User | null = null;
 	currentUserInfo: UserInfoModel | null = null;
 
