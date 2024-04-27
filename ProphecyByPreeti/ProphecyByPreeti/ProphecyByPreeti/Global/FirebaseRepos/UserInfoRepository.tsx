@@ -5,8 +5,8 @@ import {
 	serverTimestamp,
 	setDoc,
 } from "firebase/firestore";
-import { FirestoreCollections, getCollection } from "./FireStoreManager";
-import { Firestore } from "../Configs/FirebaseConfig";
+import { FirestoreCollections, getCollection } from "../FireStoreManager";
+import { Firestore } from "../../Configs/FirebaseConfig";
 
 interface UserInfo {
 	name: string | null;
@@ -24,9 +24,9 @@ export class UserInfoRepository {
 
 	currentUserInfo: UserInfoModel | null = null;
 
-	getUserInfoReceivers: Array<(response: UserInfoModel) => {}> = []
+	getUserInfoReceivers: Array<(response: UserInfoModel) => {}> = [];
 
-	isGetUserInfoFetching = false
+	isGetUserInfoFetching = false;
 
 	async createUser(userData, id: string, completionHandler) {
 		const cloudDoc = doc(Firestore, this.collectionName, id);
@@ -38,12 +38,12 @@ export class UserInfoRepository {
 	}
 
 	async getUserInfo(id: string, completionHandler) {
-		console.log("UserInfoRepository getUserInfo called with id =", id)
-		this.getUserInfoReceivers.push(completionHandler)
+		console.log("UserInfoRepository getUserInfo called with id =", id);
+		this.getUserInfoReceivers.push(completionHandler);
 		if (this.isGetUserInfoFetching == true) {
-			return
+			return;
 		}
-		this.isGetUserInfoFetching = true
+		this.isGetUserInfoFetching = true;
 		const cloudDoc = doc(Firestore, this.collectionName, id);
 		const docSnap = await getDoc(cloudDoc);
 
@@ -54,18 +54,24 @@ export class UserInfoRepository {
 					"estimate"
 				);
 				console.log("Document data:", data);
-				this.currentUserInfo = data
+				this.currentUserInfo = data;
 				this.getUserInfoReceivers.forEach((callbackfn) => {
-					console.log("UserInfoRepository getUserInfo promise current getUserInfo callbackfn =",callbackfn)
-					callbackfn(data)})
-				this.isGetUserInfoFetching = false
+					console.log(
+						"UserInfoRepository getUserInfo promise current getUserInfo callbackfn =",
+						callbackfn
+					);
+					callbackfn(data);
+				});
+				this.isGetUserInfoFetching = false;
 				resolve(data);
 			} else {
 				// docSnap.data() will be undefined in this case
 				console.log("No such document!");
 				reject("No Such Document");
-				this.getUserInfoReceivers.forEach((callbackfn) => callbackfn(null))
-				this.isGetUserInfoFetching = false
+				this.getUserInfoReceivers.forEach((callbackfn) =>
+					callbackfn(null)
+				);
+				this.isGetUserInfoFetching = false;
 			}
 		});
 	}

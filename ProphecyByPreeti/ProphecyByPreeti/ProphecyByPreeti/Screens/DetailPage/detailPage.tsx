@@ -15,8 +15,8 @@ import { useEffect, useState } from "react";
 import {
 	UserInfoModel,
 	UserInfoRepository,
-    userInfoConverter,
-} from "../../Global/UserInfoRepository";
+	userInfoConverter,
+} from "../../Global/FirebaseRepos/UserInfoRepository";
 import { CurrentUser } from "../../../App";
 
 interface RouterProps {
@@ -32,29 +32,35 @@ const DetailPage = (routerProps: RouterProps) => {
 	const [isLoading, setLoading] = useState(true);
 
 	const submitUserDetails = () => {
-        console.log("Click Submit now button")
+		console.log("Click Submit now button");
 		const uid = CurrentUser.uid;
 		const userData = new UserInfoModel(name, phone, dob, tob, pob, null);
-        console.log("Current User Data = ", userData)
-		UserInfoRepository.shared.createUser(userInfoConverter.toFirestore(userData), uid, () => {
-			routerProps.navigation.goBack();
-		});
+		console.log("Current User Data = ", userData);
+		UserInfoRepository.shared.createUser(
+			userInfoConverter.toFirestore(userData),
+			uid,
+			() => {
+				routerProps.navigation.goBack();
+			}
+		);
 	};
 
 	useEffect(() => {
 		const uid = CurrentUser.uid;
-		UserInfoRepository.shared
-			.getUserInfo(uid, (response) => {
-				console.log("Detail Page useEffect completion handler response = ", response);
-				if (response) {
-					setName(response.name);
-					setPhone(response.phoneNumber);
-					setDob(response.dob);
-					setPob(response.pob);
-					setTob(response.tob);
-				}
-				setLoading(false);
-			})
+		UserInfoRepository.shared.getUserInfo(uid, (response) => {
+			console.log(
+				"Detail Page useEffect completion handler response = ",
+				response
+			);
+			if (response) {
+				setName(response.name);
+				setPhone(response.phoneNumber);
+				setDob(response.dob);
+				setPob(response.pob);
+				setTob(response.tob);
+			}
+			setLoading(false);
+		});
 	}, [CurrentUser]);
 
 	return isLoading ? (
@@ -97,8 +103,7 @@ const DetailPage = (routerProps: RouterProps) => {
 					placeholder={DetailPageConstants.phoneNumberPlaceholderText}
 					placeholderTextColor={"#00f"}
 					onChangeText={setPhone}
-				>
-				</TextInput>
+				></TextInput>
 			</KeyboardAvoidingView>
 			<View style={DetailPageStyle.emptyViewStyle}></View>
 			<View style={DetailPageStyle.submitNowButtonStyle}>

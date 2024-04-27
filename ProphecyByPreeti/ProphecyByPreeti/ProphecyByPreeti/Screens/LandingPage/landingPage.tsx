@@ -4,7 +4,7 @@ import { FirebaseAuth } from "../../Configs/FirebaseConfig";
 import { NavigationConstant } from "../../Global/NavigationConstants";
 import { useEffect, useState } from "react";
 import { CurrentUser } from "../../../App";
-import { UserInfoRepository } from "../../Global/UserInfoRepository";
+import { UserInfoRepository } from "../../Global/FirebaseRepos/UserInfoRepository";
 
 interface RouterProps {
 	navigation: NavigationProp<any, any>;

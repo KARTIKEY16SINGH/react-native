@@ -1,5 +1,6 @@
 import RazorpayCheckout from "react-native-razorpay";
 import React from "react";
+import { UserInfoRepository } from "../FirebaseRepos/UserInfoRepository";
 
 const keyId = "rzp_test_OGAp6KfUXxXqgh";
 const firmName = "ProphecyByPreeti";
@@ -25,8 +26,11 @@ export const OrderIdForConsultation = "order_O28jlyNEtiwUHq";
 
 */
 
-export const RazorPayManager = {
-	initiatePayment: (options, successCallback, failureCallback) => {
+export class RazorPayManager {
+	static shared = new RazorPayManager()
+	constructor() {}
+
+	initiatePayment(options, successCallback, failureCallback) {
 		options = {
 			...options,
 			key: keyId,
@@ -44,5 +48,20 @@ export const RazorPayManager = {
 				console.log(`Error: ${error.code} | ${error.description}`);
 				failureCallback(error);
 			});
-	},
-};
+	}
+
+	initiatePaymentForOneHourSession(successCallback, failureCallback) {
+		this.initiatePayment(
+			{
+				order_id: "order_O28jlyNEtiwUHq",
+				amount: "310000",
+				prefill: {
+					contact: "+91".concat(UserInfoRepository.shared.currentUserInfo.phoneNumber),
+					name: UserInfoRepository.shared.currentUserInfo.name,
+				},
+			},
+			successCallback,
+			failureCallback
+		);
+	}
+}

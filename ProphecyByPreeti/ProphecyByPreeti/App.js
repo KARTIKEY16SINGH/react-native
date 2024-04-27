@@ -19,7 +19,7 @@ import { ChatView } from "./ProphecyByPreeti/Views/ChatView/ChatView";
 import {
 	UserInfoModel,
 	UserInfoRepository,
-} from "./ProphecyByPreeti/Global/UserInfoRepository";
+} from "./ProphecyByPreeti/Global/FirebaseRepos/UserInfoRepository";
 import { UsersPage } from "./ProphecyByPreeti/Screens/UsersPage/UsersPage";
 // import { registerRootComponent } from 'expo';
 
@@ -54,8 +54,10 @@ function InsideLayout() {
 				component={ChatView}
 				options={{ headerShown: true }}
 			/>
-			<InsideStackNavigator.Screen name={NavigationConstant.usersPage.name}
-			component={UsersPage} />
+			<InsideStackNavigator.Screen
+				name={NavigationConstant.usersPage.name}
+				component={UsersPage}
+			/>
 		</InsideStackNavigator.Navigator>
 	);
 }
@@ -70,9 +72,11 @@ export default function App() {
 			console.log("App useEffect user", user);
 			CurrentUser = user;
 			UserInfoRepository.shared.getUserInfo(user.uid, (response) => {
-				console.log("App userInfoRepository getUserInfo callback function")
+				console.log(
+					"App userInfoRepository getUserInfo callback function"
+				);
 				StreamManager.shared.connectUserToStream(response, user);
-				setStreamReady(true)
+				setStreamReady(true);
 			});
 			setCurrentUser(user);
 		});
@@ -110,7 +114,7 @@ export default function App() {
 			<NativeStackNavigator.Navigator
 				initialRouteName={NavigationConstant.loginPage.name}
 			>
-				{(currentUser && streamReady) ? (
+				{currentUser && streamReady ? (
 					<NativeStackNavigator.Screen
 						name="Inside"
 						component={InsideLayout}

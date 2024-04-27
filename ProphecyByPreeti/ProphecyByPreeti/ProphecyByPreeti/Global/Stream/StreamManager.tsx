@@ -1,5 +1,5 @@
 import { User } from "firebase/auth";
-import { UserInfoModel } from "../UserInfoRepository";
+import { UserInfoModel } from "../FirebaseRepos/UserInfoRepository";
 import { StreamChat } from "stream-chat";
 
 export const StreamDataManager = {
@@ -50,9 +50,9 @@ export class StreamManager {
 			{ name: "Preeti" }
 		);
 		//  = streamClient.channel("messaging", CurrentUser.uid, {name: "Preeti"});
-        console.log("Stream Manager 1 Channel =", channel);
+		console.log("Stream Manager 1 Channel =", channel);
 		await channel.watch();
-        console.log("Stream Manager 2 Channel =", channel);
+		console.log("Stream Manager 2 Channel =", channel);
 		return channel;
 	}
 }
