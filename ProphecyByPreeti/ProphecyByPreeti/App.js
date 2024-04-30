@@ -21,6 +21,7 @@ import {
 	UserInfoRepository,
 } from "./ProphecyByPreeti/Global/FirebaseRepos/UserInfoRepository";
 import { UsersPage } from "./ProphecyByPreeti/Screens/UsersPage/UsersPage";
+import { RequestCallbackPage } from "./ProphecyByPreeti/Screens/RequestCallbackPage/requestCallbackPage";
 // import { registerRootComponent } from 'expo';
 
 const NativeStackNavigator = createNativeStackNavigator();
@@ -47,7 +48,7 @@ function InsideLayout() {
 			<InsideStackNavigator.Screen
 				name={NavigationConstant.scheduleCallbackPage.name}
 				component={ScheduleCallbackPage}
-				options={{ headerShown: false }}
+				options={{ headerShown: true }}
 			/>
 			<InsideStackNavigator.Screen
 				name={NavigationConstant.chatWithUsPage.name}
@@ -57,6 +58,10 @@ function InsideLayout() {
 			<InsideStackNavigator.Screen
 				name={NavigationConstant.usersPage.name}
 				component={UsersPage}
+			/>
+			<InsideStackNavigator.Screen
+				name={NavigationConstant.requestCallbackPage.name}
+				component={RequestCallbackPage}
 			/>
 		</InsideStackNavigator.Navigator>
 	);

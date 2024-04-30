@@ -63,6 +63,6 @@ export const addDataToCollectionWithId = async (
 // Deleters
 export const FirestoreCollections = {
 	userInfo: "UserInfo",
-	testCollection: "Test",
+	requestCallback: "RequestCallback",
 	slotsAvailability: "SlotAvailability",
 };

@@ -60,7 +60,14 @@ const LandingPage = (routerProps: RouterProps) => {
 					)
 				}
 			/>
-			<Button title="Request callback" onPress={() => {}} />
+			<Button
+				title="Request callback"
+				onPress={() => {
+					routerProps.navigation.navigate(
+						NavigationConstant.requestCallbackPage.name
+					);
+				}}
+			/>
 			<Button
 				title="Chat With Us"
 				onPress={() =>
