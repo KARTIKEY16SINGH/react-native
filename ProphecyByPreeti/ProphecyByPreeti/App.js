@@ -22,11 +22,16 @@ import {
 } from "./ProphecyByPreeti/Global/FirebaseRepos/UserInfoRepository";
 import { UsersPage } from "./ProphecyByPreeti/Screens/UsersPage/UsersPage";
 import { RequestCallbackPage } from "./ProphecyByPreeti/Screens/RequestCallbackPage/requestCallbackPage";
+import AdminLandinPage from "./ProphecyByPreeti/Screens/AdminLandingPage/adminLandinPage";
+import AdminChatPage from "./ProphecyByPreeti/Screens/AdminChatPage/adminChatPage";
+import ChannelScreen from "./ProphecyByPreeti/Screens/ChannelScreen/channelScreen";
 // import { registerRootComponent } from 'expo';
 
 const NativeStackNavigator = createNativeStackNavigator();
 
 const InsideStackNavigator = createNativeStackNavigator();
+
+const AdminStackNavigator = createNativeStackNavigator();
 
 const streamClient = StreamManager.shared.streamClient;
 
@@ -67,20 +72,48 @@ function InsideLayout() {
 	);
 }
 
+function AdminLayout() {
+	return (
+		<AdminStackNavigator.Navigator
+			initialRouteName={NavigationConstant.landingPage.name}
+		>
+			<AdminStackNavigator.Screen name={NavigationConstant.landingPage.name} component={AdminLandinPage} options={{headerShown: false}} />
+			<AdminStackNavigator.Screen name={NavigationConstant.adminChatPage.name} component={AdminChatPage} />
+			<AdminStackNavigator.Screen name={NavigationConstant.chatScreenPage.name} component={ChannelScreen} />
+		</AdminStackNavigator.Navigator>
+	);
+}
+
+const adminUid = "48N0IfNp74PPwG5TimOr3xdt2ZL2";
+
 export let CurrentUser: User = undefined;
+export let IsAdmin = false;
 
 export default function App() {
 	const [currentUser, setCurrentUser] = useState(null);
 	const [streamReady, setStreamReady] = useState(false);
+	const [isAdmin, setIsAdmin] = useState(false);
+
 	useEffect(() => {
 		onAuthStateChanged(FirebaseAuth, (user) => {
 			console.log("App useEffect user", user);
 			CurrentUser = user;
-			if (user != null && user != undefined && user.uid != null && user.uid != undefined) {
+			setIsAdmin(false);
+			if (
+				user != null &&
+				user != undefined &&
+				user.uid != null &&
+				user.uid != undefined
+			) {
 				UserInfoRepository.shared.getUserInfo(user.uid, null);
+				if (user.uid == adminUid) {
+					console.log("App js onAuthStateChanged yay admin logedin");
+					IsAdmin = true;
+					setIsAdmin(true);
+				}
 			}
 			if (user == null || user == undefined) {
-				UserInfoRepository.shared.currentUserInfo = null
+				UserInfoRepository.shared.currentUserInfo = null;
 			}
 			setCurrentUser(user);
 		});
@@ -113,17 +146,33 @@ export default function App() {
 		return () => streamClient.disconnectUser();
 	}, []);
 
+	const layoutAfterLoginStack = () => {
+		console.log("App Js layoutAfetLoginStack isAdmin =", isAdmin)
+		if (isAdmin == true) {
+			return (
+				<NativeStackNavigator.Screen
+					name="Admin"
+					component={AdminLayout}
+					options={{ headerShown: false }}
+				/>
+			);
+		}
+		return (
+			<NativeStackNavigator.Screen
+				name="Inside"
+				component={InsideLayout}
+				options={{ headerShown: false }}
+			/>
+		);
+	};
+
 	return (
 		<NavigationContainer>
 			<NativeStackNavigator.Navigator
 				initialRouteName={NavigationConstant.loginPage.name}
 			>
 				{currentUser ? (
-					<NativeStackNavigator.Screen
-						name="Inside"
-						component={InsideLayout}
-						options={{ headerShown: false }}
-					/>
+					layoutAfterLoginStack()
 				) : (
 					<NativeStackNavigator.Screen
 						name={NavigationConstant.loginPage.name}

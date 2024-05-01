@@ -4,7 +4,7 @@ import { StreamChat } from "stream-chat";
 
 export const StreamDataManager = {
 	apiKey: "5zywan3b372r",
-	adminId: "shivasingh",
+	adminId: "48N0IfNp74PPwG5TimOr3xdt2ZL2",
 };
 
 export class StreamManager {
@@ -56,4 +56,17 @@ export class StreamManager {
 		console.log("Stream Manager 2 Channel =", channel);
 		return channel;
 	}
+
+    async createChannelFromAdmin(userId: string) {
+		const channel = this.streamClient.channel(
+			"messaging",
+			// this.currentUser.uid,
+			{ members: [userId, StreamDataManager.adminId] }
+		);
+		//  = streamClient.channel("messaging", CurrentUser.uid, {name: "Preeti"});
+		console.log("Stream Manager 1 Channel =", channel);
+		await channel.watch();
+		console.log("Stream Manager 2 Channel =", channel);
+		return channel;
+    }
 }
