@@ -38,11 +38,11 @@ const DetailPage = (routerProps: RouterProps) => {
 		console.log("Current User Data = ", userData);
 		UserInfoRepository.shared.createUser(
 			userInfoConverter.toFirestore(userData),
-			uid,
-			() => {
-				routerProps.navigation.goBack();
-			}
-		);
+			uid, null
+		).then((response) => {
+			console.log("DetailPage submitUserDetail promise response =", response)
+			routerProps.navigation.goBack();
+		})
 	};
 
 	useEffect(() => {

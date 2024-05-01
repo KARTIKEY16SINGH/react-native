@@ -31,7 +31,7 @@ const LoginPage = () => {
 				email,
 				password
 			);
-			console.log(response);
+			console.log("LoginPage startSignIn response =",response);
 		} catch (error) {
 			console.log(error);
 		} finally {
@@ -47,7 +47,7 @@ const LoginPage = () => {
 				email,
 				password
 			);
-			console.log(response);
+			console.log("LoginPage startSignUp response =",response);
 		} catch (error) {
 			console.log(error);
 		} finally {

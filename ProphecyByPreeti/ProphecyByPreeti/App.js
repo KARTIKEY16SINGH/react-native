@@ -76,13 +76,12 @@ export default function App() {
 		onAuthStateChanged(FirebaseAuth, (user) => {
 			console.log("App useEffect user", user);
 			CurrentUser = user;
-			UserInfoRepository.shared.getUserInfo(user.uid, (response) => {
-				console.log(
-					"App userInfoRepository getUserInfo callback function"
-				);
-				StreamManager.shared.connectUserToStream(response, user);
-				setStreamReady(true);
-			});
+			if (user != null && user != undefined && user.uid != null && user.uid != undefined) {
+				UserInfoRepository.shared.getUserInfo(user.uid, null);
+			}
+			if (user == null || user == undefined) {
+				UserInfoRepository.shared.currentUserInfo = null
+			}
 			setCurrentUser(user);
 		});
 	}, []);
@@ -119,7 +118,7 @@ export default function App() {
 			<NativeStackNavigator.Navigator
 				initialRouteName={NavigationConstant.loginPage.name}
 			>
-				{currentUser && streamReady ? (
+				{currentUser ? (
 					<NativeStackNavigator.Screen
 						name="Inside"
 						component={InsideLayout}

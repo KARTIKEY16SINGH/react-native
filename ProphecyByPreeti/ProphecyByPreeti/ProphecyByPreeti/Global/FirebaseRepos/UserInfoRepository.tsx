@@ -7,6 +7,8 @@ import {
 } from "firebase/firestore";
 import { FirestoreCollections, getCollection } from "../FireStoreManager";
 import { Firestore } from "../../Configs/FirebaseConfig";
+import { StreamManager } from "../Stream/StreamManager";
+import { CurrentUser } from "../../../App";
 
 interface UserInfo {
 	name: string | null;
@@ -38,10 +40,24 @@ export class UserInfoRepository {
 	}
 
 	async getUserInfo(id: string, completionHandler) {
-		console.log("UserInfoRepository getUserInfo called with id =", id);
-		this.getUserInfoReceivers.push(completionHandler);
+		console.log(
+			"UserInfoRepository getUserInfo called with id =",
+			id,
+			"completionHandler =",
+			completionHandler
+		);
+		if (completionHandler != null || completionHandler != undefined) {
+			this.getUserInfoReceivers.push(completionHandler);
+		}
+		console.log(
+			"UserInfoRepository getUserInfo called with userInfo =",
+			this.currentUserInfo
+		);
 		if (this.isGetUserInfoFetching == true) {
-			return;
+			return
+		} 
+		if (this.currentUserInfo != null || this.currentUserInfo != undefined) {
+			return completionHandler(this.currentUserInfo);
 		}
 		this.isGetUserInfoFetching = true;
 		const cloudDoc = doc(Firestore, this.collectionName, id);
@@ -55,6 +71,7 @@ export class UserInfoRepository {
 				);
 				console.log("Document data:", data);
 				this.currentUserInfo = data;
+				StreamManager.shared.connectUserToStream(data, CurrentUser);
 				this.getUserInfoReceivers.forEach((callbackfn) => {
 					console.log(
 						"UserInfoRepository getUserInfo promise current getUserInfo callbackfn =",
@@ -66,12 +83,33 @@ export class UserInfoRepository {
 				resolve(data);
 			} else {
 				// docSnap.data() will be undefined in this case
-				console.log("No such document!");
-				reject("No Such Document");
-				this.getUserInfoReceivers.forEach((callbackfn) =>
-					callbackfn(null)
+				console.log(
+					"UserInfoRepository No such document! getUserInfoReceivers length =",
+					this.getUserInfoReceivers.length
 				);
+				for (
+					let index = 0;
+					index < this.getUserInfoReceivers.length;
+					index++
+				) {
+					const callbackfn = this.getUserInfoReceivers[index];
+					console.log(
+						"UserInfoRepository getUserInfo promise current getUserInfo index = ",
+						index,
+						"callbackfn =",
+						callbackfn
+					);
+					callbackfn(null);
+				}
+				// this.getUserInfoReceivers.forEach((callbackfn) => {
+				// 	console.log(
+				// 		"UserInfoRepository getUserInfo promise current getUserInfo callbackfn =",
+				// 		callbackfn
+				// 	);
+				// 	callbackfn(null);
+				// });
 				this.isGetUserInfoFetching = false;
+				// reject(null);
 			}
 		});
 	}

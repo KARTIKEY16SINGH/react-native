@@ -1,6 +1,7 @@
 import { View, Text, StyleSheet, TouchableOpacity, Alert } from "react-native";
 import React, {useState}from "react";
 import { RazorPayManager } from "../../Global/RazorPay/RazorPayManager";
+import { StreamManager } from "../../Global/Stream/StreamManager";
 
 const SlotView = ({ item, callback, paymentSuccess }) => {
     const [isBooked, setIsBooked] = useState(item.isBooked);

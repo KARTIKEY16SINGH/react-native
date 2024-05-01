@@ -31,7 +31,7 @@ export const ChatView = () => {
 		const connectUser = async () => {
 			// const channel = streamClient.channel("messaging", CurrentUser.uid, {name: "Preeti"});
 			const channel = streamClient.channel("messaging", {
-				members: [CurrentUser.uid, "shivasingh"],
+				members: [CurrentUser.uid, StreamDataManager.adminId],
 			});
 			await channel.watch();
 			console.log("Chat View useEffect Channel =", channel);

@@ -14,26 +14,27 @@ const LandingPage = (routerProps: RouterProps) => {
 	const [showDetail, setShowDetail] = useState(false);
 
 	useEffect(() => {
-		console.log("Inside Use Effect");
+		console.log("LandingPage Inside Use Effect");
 		if (CurrentUser) {
 			const userInfo = UserInfoRepository.shared.currentUserInfo;
 			console.log("Landing Page UserInfo =", userInfo);
 			if (userInfo == null || userInfo == undefined) {
 				const uid = CurrentUser.uid;
-				UserInfoRepository.shared.getUserInfo(uid, (response) => {
+				const callbackfn = (response) => {
 					console.log(
 						"Landing Page Completion Handler response =",
 						response
 					);
-					if (response) {
+					if (response != null && response != undefined) {
 						setShowDetail(false);
 					} else {
 						setShowDetail(true);
 					}
-				});
+				}
+				UserInfoRepository.shared.getUserInfo(uid, callbackfn);
 			}
 		}
-	}, [CurrentUser]);
+	}, []);
 
 	if (showDetail == true) {
 		routerProps.navigation.navigate(NavigationConstant.detailPage.name);
