@@ -46,8 +46,8 @@ export class StreamManager {
 	async createChannel() {
 		const channel = this.streamClient.channel(
 			"messaging",
-			this.currentUser.uid,
-			{ name: "Preeti" }
+			// this.currentUser.uid,
+			{ members: [this.currentUser.uid, "shivasingh"] }
 		);
 		//  = streamClient.channel("messaging", CurrentUser.uid, {name: "Preeti"});
 		console.log("Stream Manager 1 Channel =", channel);

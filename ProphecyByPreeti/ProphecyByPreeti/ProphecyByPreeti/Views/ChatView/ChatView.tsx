@@ -29,11 +29,14 @@ export const ChatView = () => {
 		// debugger
 		console.log("Chat View useEffect Channel =", channel);
 		const connectUser = async () => {
-			const channel = streamClient.channel("messaging", CurrentUser.uid, {name: "Preeti"});
-			await channel.watch()
+			// const channel = streamClient.channel("messaging", CurrentUser.uid, {name: "Preeti"});
+			const channel = streamClient.channel("messaging", {
+				members: [CurrentUser.uid, "shivasingh"],
+			});
+			await channel.watch();
 			console.log("Chat View useEffect Channel =", channel);
 			// debugger;
-            setChannel(channel);
+			setChannel(channel);
 			setLoading(false);
 		};
 		connectUser();
@@ -45,7 +48,7 @@ export const ChatView = () => {
 		setSelectedChannel(channel);
 	};
 
-	return (loading == true || (channel == null || channel == undefined)) ? (
+	return loading == true || channel == null || channel == undefined ? (
 		<ActivityIndicator size={"large"} />
 	) : (
 		<OverlayProvider>
