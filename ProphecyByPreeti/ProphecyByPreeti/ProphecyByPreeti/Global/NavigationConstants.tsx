@@ -8,5 +8,6 @@ export const NavigationConstant = {
     chatWithUsPage: {id: "chatWithUsPage", name: "Chat With Us"},
     usersPage: {id: "UsersPage", name: "All Users"},
     adminChatPage: {id: "AdminChatPage", name: "Chats"},
-    chatScreenPage: {id: "ChatScreenPage", name: "Chat Screen"}
+    chatScreenPage: {id: "ChatScreenPage", name: "Chat Screen"},
+    scheduleMaganagePage: {id: "ScheduleManager", name: "Schedule Manager"}
 }

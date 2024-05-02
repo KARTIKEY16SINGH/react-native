@@ -1,4 +1,4 @@
-import { doc, getDoc, updateDoc } from "firebase/firestore";
+import { doc, getDoc, setDoc, updateDoc } from "firebase/firestore";
 import { Firestore } from "../../Configs/FirebaseConfig";
 import { FirestoreCollections } from "../FireStoreManager";
 
@@ -40,6 +40,35 @@ export class SlotAvailabilityRepository {
 		await updateDoc(cloudDoc, {
 			slots: slots,
 		});
+	}
+
+	async createSlots(timestamp, slots) {
+		console.log(
+			"SlotAvailabilityRepository createSlots timestamp =",
+			timestamp,
+			" slots =",
+			slots
+		);
+		const cloudDoc = doc(Firestore, this.collectionName, timestamp);
+		console.log(
+			"SlotAvailabilityRepository createSlots cloudDoc =",
+			cloudDoc
+		);
+		await setDoc(cloudDoc, {
+			slots: slots,
+		})
+			.then((response) => {
+				console.log(
+					"SlotAvailabilityRepository createSlots setDoc then response =",
+					response
+				);
+			})
+			.catch((error) => {
+				console.log(
+					"SlotAvailabilityRepository createSlots setDoc catch error =",
+					error
+				);
+			});
 	}
 }
 
