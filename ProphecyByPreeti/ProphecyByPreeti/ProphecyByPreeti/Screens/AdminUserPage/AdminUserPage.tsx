@@ -17,11 +17,11 @@ interface RouterProps {
 
 const AdminUserPage = (routerProps: RouterProps) => {
 	console.log("AdminUserPage routerProps =", routerProps);
-    const {userId} = routerProps.route.params
+    const userId = routerProps.route.params.userId || routerProps.route.params.data.userId
 	const [fetching, setFetching] = useState(true);
 	const [userInfo, setUserInfo] = useState<UserInfoModel | null>(null);
     const [todo, setTodo] = useState("")
-
+    console.log("AdminUserPage userId =", userId);
 	useEffect(() => {
 		setFetching(true);
 		UserInfoRepository.shared

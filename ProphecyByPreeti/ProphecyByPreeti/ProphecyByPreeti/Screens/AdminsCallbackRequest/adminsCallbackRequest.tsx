@@ -48,7 +48,7 @@ const AdminsCallbackRequest = (routerProps: RouterProps) => {
                 const updatedData = {...requestData.data, isBooked: true}
                 console.log("AdminsCallbackRequest onRequestClick updatedData =",updatedData)
                 RequestCallbackRepository.shared.updateRequest(requestData.userId, updatedData).then((response) => {
-                    console.log("AdminsCallbackRequest onRequestClick updateRequest promise response =",requestData)
+                    console.log("AdminsCallbackRequest onRequestClick updateRequest promise response =",response)
                     fetchRequests()
                 })
             }

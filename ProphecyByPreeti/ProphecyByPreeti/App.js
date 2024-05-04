@@ -29,6 +29,7 @@ import AdminSchedulePage from "./ProphecyByPreeti/Screens/AdminSchedulePage/admi
 import AdminsCallbackRequest from "./ProphecyByPreeti/Screens/AdminsCallbackRequest/adminsCallbackRequest";
 import AdminUserPage from "./ProphecyByPreeti/Screens/AdminUserPage/AdminUserPage";
 import ChatPage from "./ProphecyByPreeti/Screens/ChatPage/ChatPage";
+import AdminTodoPage from "./ProphecyByPreeti/Screens/AdminTodoPage/adminTodoPage";
 // import { registerRootComponent } from 'expo';
 
 const NativeStackNavigator = createNativeStackNavigator();
@@ -88,6 +89,7 @@ function AdminLayout() {
 			<AdminStackNavigator.Screen name={NavigationConstant.adminsCallbackRequest.name} component={AdminsCallbackRequest} />
 			<AdminStackNavigator.Screen name={NavigationConstant.adminUserPage.name} component={AdminUserPage} />
 			<AdminStackNavigator.Screen name={NavigationConstant.chatPage.name} component={ChatPage} />
+			<AdminStackNavigator.Screen name={NavigationConstant.todoPage.name} component={AdminTodoPage} />
 		</AdminStackNavigator.Navigator>
 	);
 }

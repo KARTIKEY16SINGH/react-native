@@ -28,8 +28,17 @@ export class TodoRepository {
         let result = []
 
         querySnapshot.forEach((cloudDoc) => {
-            console.log("TodoRepository fetchAllOpenTodo querySnapshot forEach cloudDoc =", cloudDoc)
+            console.log("TodoRepository fetchAllOpenTodo querySnapshot cloudDoc =",cloudDoc)
+			console.log("TodoRepository fetchAllOpenTodo querySnapshot cloudDoc id =",cloudDoc.id)
+			console.log("TodoRepository fetchAllOpenTodo querySnapshot cloudDoc data =",cloudDoc.data())
+			result.push({
+				docId: cloudDoc.id,
+				data: cloudDoc.data()
+			})
 
         })
+
+        console.log("TodoRepository fetchAllOpenTodo final result =",result)
+        return result
     }
 }
