@@ -90,6 +90,7 @@ function AdminLayout() {
 			<AdminStackNavigator.Screen name={NavigationConstant.adminUserPage.name} component={AdminUserPage} />
 			<AdminStackNavigator.Screen name={NavigationConstant.chatPage.name} component={ChatPage} />
 			<AdminStackNavigator.Screen name={NavigationConstant.todoPage.name} component={AdminTodoPage} />
+			<AdminStackNavigator.Screen name={NavigationConstant.usersPage.name} component={UsersPage} />
 		</AdminStackNavigator.Navigator>
 	);
 }

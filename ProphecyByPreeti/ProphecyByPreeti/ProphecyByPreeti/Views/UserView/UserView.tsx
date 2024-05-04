@@ -12,12 +12,18 @@ import {
 	UserInfoRepository,
 } from "../../Global/FirebaseRepos/UserInfoRepository";
 
-const UserView = ({ userId, onUserClick, style, textStyle }) => {
+const UserView = ({ userId, onUserClick, style, textStyle, userData }) => {
 	const [fetching, setFetching] = useState(true);
-	const [userInfo, setUserInfo] = useState<UserInfoModel | null>(null);
+	const [userInfo, setUserInfo] = useState<UserInfoModel | string | null>(null);
 
 	useEffect(() => {
 		setFetching(true);
+        console.log("UserView useEffect userId =", userId, " userData =", userData)
+        if(userData != null || userData != undefined) {
+            setUserInfo(userData)
+            setFetching(false)
+            return
+        }
 		if (userId == null || userId == undefined) {
 			setFetching(false);
 			setUserInfo(null);

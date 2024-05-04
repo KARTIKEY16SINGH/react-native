@@ -1,9 +1,13 @@
 import {
 	Timestamp,
+	collection,
 	doc,
 	getDoc,
+	getDocs,
+	query,
 	serverTimestamp,
 	setDoc,
+	where,
 } from "firebase/firestore";
 import { FirestoreCollections, getCollection } from "../FireStoreManager";
 import { Firestore } from "../../Configs/FirebaseConfig";
@@ -127,6 +131,28 @@ export class UserInfoRepository {
 			return data
 		}
 		return null
+	}
+
+	async fetchAllUsers() {
+		const cloudCollection = collection(Firestore, this.collectionName)
+		const fetchQuery = query(cloudCollection)
+		const querySnapshot = await getDocs(fetchQuery)
+
+		let result = []
+
+		querySnapshot.forEach((cloudDoc) => {
+			console.log("UserInfoRepository fetchAllUsers querySnapshot cloudDoc id =",cloudDoc.id)
+			console.log("UserInfoRepository fetchAllUsers querySnapshot cloudDoc data =",cloudDoc.data())
+			if(cloudDoc.id == CurrentUser.uid) {
+				return
+			}
+			result.push({
+				userId: cloudDoc.id,
+				data: cloudDoc.data()
+			})
+		})
+		console.log("UserInfoRepository fetchAllUsers results =",result)
+		return result
 	}
 }
 

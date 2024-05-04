@@ -3,18 +3,25 @@ import { StreamManager } from "../../Global/Stream/StreamManager";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { FlatList, StyleSheet } from "react-native";
 import { UserListItem } from "../../Views/UserListItem/UserListItem";
+import UserView from "../../Views/UserView/UserView";
+import { UserInfoRepository } from "../../Global/FirebaseRepos/UserInfoRepository";
+import { NavigationProp } from "@react-navigation/native";
+import { NavigationConstant } from "../../Global/NavigationConstants";
 
-export const UsersPage = () => {
+interface RouterProps {
+	navigation: NavigationProp<any, any>;
+}
+
+export const UsersPage = (routerProps: RouterProps) => {
 	const [users, setUsers] = useState([]);
     const [isLoading, setIsLoading] = useState(false);
 
-	const client = StreamManager.shared.streamClient;
-
     const fetchUsers = async () => {
-        const response = await client.queryUsers({});
-        console.log("UserPage useEffect fetchUser response =", response);
-        setUsers(response.users);
-        setIsLoading(false)
+        UserInfoRepository.shared.fetchAllUsers().then((response) => {
+            console.log("UserPage fetchUsers fetachAllUsers promise response =",response)
+            setUsers(response)
+            setIsLoading(false)
+        })
     };
 
 	useEffect(() => {
@@ -22,11 +29,22 @@ export const UsersPage = () => {
 		fetchUsers();
 	}, []);
 
+    const onUserClick = (userInfoData) => {
+        console.log(
+			"UsersPage onUserClick requestData =",
+			userInfoData
+		);
+		routerProps.navigation.navigate(
+			NavigationConstant.adminUserPage.name,
+			userInfoData
+		);
+    }
+
 	return (
 		<SafeAreaView style={styles.container}>
 			<FlatList onRefresh={fetchUsers} refreshing={isLoading}
 				data={users}
-				renderItem={({ item }) => <UserListItem user={item}/>}
+				renderItem={({ item }) => <UserView userData={item.data} onUserClick={ () => onUserClick(item)} style={styles.userView} textStyle={styles.userViewText}/>}
 			/>
 		</SafeAreaView>
 	);
@@ -37,10 +55,12 @@ const styles = StyleSheet.create({
         flex: 1,
         alignItems: 'stretch'
     },
-    title: {
-
+    userView: {
+        margin: 10,
+        padding: 10,
+        backgroundColor: 'white'
     },
-    separator: {
-
+    userViewText: {
+        fontSize: 25
     }
 })
