@@ -15,9 +15,9 @@ const AdminLandinPage = (routerProps: RouterProps) => {
     <SafeAreaView style={{flex:1, justifyContent: 'center'}}>
         <Button title='Chats' onPress={() => {navigationStack.navigate(NavigationConstant.adminChatPage.name)}} />
         <Button title='Schedule' onPress={() => {navigationStack.navigate(NavigationConstant.scheduleMaganagePage.name)}} />
-        <Button title='Callback Requests' onPress={() => {navigationStack.navigate(NavigationConstant.adminChatPage.name)}} />
+        <Button title='Callback Requests' onPress={() => {navigationStack.navigate(NavigationConstant.adminsCallbackRequest.name)}} />
         <Button title='Todos' onPress={() => {navigationStack.navigate(NavigationConstant.adminChatPage.name)}} />
-        <Button title='All Users' onPress={() => {navigationStack.navigate(NavigationConstant.adminChatPage.name)}} />
+        <Button title='All Users' onPress={() => {navigationStack.navigate(NavigationConstant.usersPage.name)}} />
         <Button title='Logout' onPress={() => {FirebaseAuth.signOut()}} />
     </SafeAreaView>
   )

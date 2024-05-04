@@ -9,5 +9,9 @@ export const NavigationConstant = {
     usersPage: {id: "UsersPage", name: "All Users"},
     adminChatPage: {id: "AdminChatPage", name: "Chats"},
     chatScreenPage: {id: "ChatScreenPage", name: "Chat Screen"},
-    scheduleMaganagePage: {id: "ScheduleManager", name: "Schedule Manager"}
+    scheduleMaganagePage: {id: "ScheduleManager", name: "Schedule Manager"},
+    adminsCallbackRequest: {id: "CallbackRequests", name: "Callback Requests"},
+    adminUserPage: {id: "AdminUserPage", name: "User Details"},
+    chatPage: {id: "Chat Page", name: "Chat"},
+    todoPage: {id: "TodoPage", name: "Todos"}
 }

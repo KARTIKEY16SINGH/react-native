@@ -1,10 +1,13 @@
-import { deleteDoc, doc, getDoc, setDoc, updateDoc } from "firebase/firestore";
+import { collection, deleteDoc, doc, getDoc, getDocs, orderBy, query, setDoc, updateDoc, where } from "firebase/firestore";
 import { FirestoreCollections } from "../FireStoreManager";
 import { Firestore } from "../../Configs/FirebaseConfig";
+import { DownloadCloud } from "stream-chat-expo";
 
 export class RequestCallbackRepository {
 	static shared = new RequestCallbackRepository();
 	collectionName = FirestoreCollections.requestCallback;
+	isBookedField = 'isBooked'
+	timeStampField = 'timestamp'
 	constructor() {}
 
 	async fetchRequestFor(id: string) {
@@ -31,6 +34,27 @@ export class RequestCallbackRepository {
         const cloudDoc = doc(Firestore, this.collectionName, id)
         await setDoc(cloudDoc, data)
     }
+
+	async fetchAllRequest() {
+		const cloudCollection = collection(Firestore, this.collectionName)
+		const cloudQuery = query(cloudCollection, where(this.isBookedField, "==", false), orderBy(this.timeStampField))
+
+		const querySnapshot = await getDocs(cloudQuery)
+
+		console.log("RequestCallbackRepository fetchAllRequest querySnapshot =",querySnapshot.docs)
+		
+		let result = []
+		querySnapshot.forEach((cloudDoc) => {
+			console.log("RequestCallbackRepository fetchAllRequest querySnapshot cloudDoc =",cloudDoc)
+			console.log("RequestCallbackRepository fetchAllRequest querySnapshot cloudDoc id =",cloudDoc.id)
+			console.log("RequestCallbackRepository fetchAllRequest querySnapshot cloudDoc data =",cloudDoc.data())
+			result.push({
+				userId: cloudDoc.id,
+				data: cloudDoc.data()
+			})
+		})
+		return result
+	}
 }
 
 const requestCallbackConverter = {

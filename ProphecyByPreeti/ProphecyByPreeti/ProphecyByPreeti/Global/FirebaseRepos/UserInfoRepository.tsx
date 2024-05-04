@@ -113,6 +113,21 @@ export class UserInfoRepository {
 			}
 		});
 	}
+
+	async getCloudUserInfo(userId: string) {
+		const cloudDoc = doc(Firestore, this.collectionName, userId)
+		const docSnap = await getDoc(cloudDoc)
+
+		if(docSnap.exists()) {
+			const data = userInfoConverter.fromFirestore(
+				docSnap,
+				"estimate"
+			);
+			console.log("UserInfoRepository getCloudUserInfo data =", data)
+			return data
+		}
+		return null
+	}
 }
 
 export class UserInfoModel implements UserInfo {

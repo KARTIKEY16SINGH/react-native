@@ -26,6 +26,9 @@ import AdminLandinPage from "./ProphecyByPreeti/Screens/AdminLandingPage/adminLa
 import AdminChatPage from "./ProphecyByPreeti/Screens/AdminChatPage/adminChatPage";
 import ChannelScreen from "./ProphecyByPreeti/Screens/ChannelScreen/channelScreen";
 import AdminSchedulePage from "./ProphecyByPreeti/Screens/AdminSchedulePage/adminSchedulePage";
+import AdminsCallbackRequest from "./ProphecyByPreeti/Screens/AdminsCallbackRequest/adminsCallbackRequest";
+import AdminUserPage from "./ProphecyByPreeti/Screens/AdminUserPage/AdminUserPage";
+import ChatPage from "./ProphecyByPreeti/Screens/ChatPage/ChatPage";
 // import { registerRootComponent } from 'expo';
 
 const NativeStackNavigator = createNativeStackNavigator();
@@ -82,6 +85,9 @@ function AdminLayout() {
 			<AdminStackNavigator.Screen name={NavigationConstant.adminChatPage.name} component={AdminChatPage} />
 			<AdminStackNavigator.Screen name={NavigationConstant.chatScreenPage.name} component={ChannelScreen} />
 			<AdminStackNavigator.Screen name={NavigationConstant.scheduleMaganagePage.name} component={AdminSchedulePage} />
+			<AdminStackNavigator.Screen name={NavigationConstant.adminsCallbackRequest.name} component={AdminsCallbackRequest} />
+			<AdminStackNavigator.Screen name={NavigationConstant.adminUserPage.name} component={AdminUserPage} />
+			<AdminStackNavigator.Screen name={NavigationConstant.chatPage.name} component={ChatPage} />
 		</AdminStackNavigator.Navigator>
 	);
 }

@@ -4,6 +4,7 @@ import { RequestCallbackRepository } from "../../Global/FirebaseRepos/RequestCal
 import { UserInfoRepository } from "../../Global/FirebaseRepos/UserInfoRepository";
 import { CurrentUser } from "../../../App";
 import { RequestCallbackPageStyle } from "./requestCallbackPageStyles";
+import { serverTimestamp } from "firebase/firestore";
 
 const style = RequestCallbackPageStyle;
 
@@ -68,8 +69,10 @@ export const RequestCallbackPage = () => {
 			Alert.alert("Invalid request. Please Enter some text");
 			return;
 		}
+		const req = { ...request, timestamp: serverTimestamp() };
+		console.log("RequestCallbackPage onSubmit req =", req);
 		RequestCallbackRepository.shared
-			.createRequest(CurrentUser.uid, request)
+			.createRequest(CurrentUser.uid, req)
 			.then((response) => {
 				console.log(
 					"RequestCallbackPage onSubmit response =",
