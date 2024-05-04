@@ -65,4 +65,5 @@ export const FirestoreCollections = {
 	userInfo: "UserInfo",
 	requestCallback: "RequestCallback",
 	slotsAvailability: "SlotAvailability",
+	todo: "Todos"
 };

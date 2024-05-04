@@ -1,4 +1,4 @@
-import { View, Text, ActivityIndicator, Button, StyleSheet, TextInput, KeyboardAvoidingView } from "react-native";
+import { View, Text, ActivityIndicator, Button, StyleSheet, TextInput, KeyboardAvoidingView, Alert } from "react-native";
 import React, { useEffect, useState } from "react";
 import { NavigationProp } from "@react-navigation/native";
 import {
@@ -7,6 +7,8 @@ import {
 } from "../../Global/FirebaseRepos/UserInfoRepository";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { NavigationConstant } from "../../Global/NavigationConstants";
+import { TodoRepository } from "../../Global/FirebaseRepos/TodoRepository";
+import { serverTimestamp } from "firebase/firestore";
 
 interface RouterProps {
 	navigation: NavigationProp<any, any>;
@@ -44,7 +46,17 @@ const AdminUserPage = (routerProps: RouterProps) => {
         if(todo == "") {
             return
         }
-        
+        const todoData = {
+            todo: todo,
+            userId: userId,
+            isCompleted: false,
+            timestamp: serverTimestamp()
+        }
+        TodoRepository.shared.createTodo(todoData).then((response) => {
+            console.log("AdminUserPage onTodoPress createTodo promise response =",response)
+            setTodo("")
+            Alert.alert("Added todo for this user")
+        })
     }
 
 	const layoutDetailsView = () => {
